@@ -1,5 +1,7 @@
 package jp.co.sample.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,9 @@ import jp.co.sample.service.AdministratorService;
 @RequestMapping("/")
 public class AdministratorController {
 
+	@Autowired
+	private HttpSession administratorSession;
+	
 	@Autowired
 	private AdministratorService administratorService;
 	
@@ -54,5 +59,21 @@ public class AdministratorController {
 	@RequestMapping("/")
 	public String toLogin() {
 		return "administrator/login";
+	}
+	/**
+	 * ログインする。
+	 * @param loginForm
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public String login(LoginForm loginForm, Model model) {
+		Administrator administrator = administratorService.login(loginForm.getMailAddress(), loginForm.getPassword());
+		if(administrator == null) {
+			model.addAttribute("failure", "メールアドレスまたはパスワードが不正です。");
+		} else {
+			administratorSession.setAttribute("administratorName", administrator.getName());
+		}
+		return "forward:/employee/showLists";
 	}
 }
