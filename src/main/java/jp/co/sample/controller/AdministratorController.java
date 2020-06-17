@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sample.domain.Administrator;
 import jp.co.sample.form.InsertAdiministratorForm;
+import jp.co.sample.form.LoginForm;
 import jp.co.sample.service.AdministratorService;
 
 @Controller
@@ -20,6 +21,11 @@ public class AdministratorController {
 	@ModelAttribute
 	public InsertAdiministratorForm setUpInsertAdministratorForm() {
 		return new InsertAdiministratorForm();
+	}
+	
+	@ModelAttribute
+	public LoginForm setUpLoginForm() {
+		return new LoginForm();
 	}
 	
 	@RequestMapping("/toInsert")
@@ -43,5 +49,10 @@ public class AdministratorController {
 		administratorService.insert(administrator);
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/")
+	public String toLogin() {
+		return "administrator/login";
 	}
 }
