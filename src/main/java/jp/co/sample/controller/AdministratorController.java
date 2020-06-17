@@ -42,6 +42,6 @@ public class AdministratorController {
 		
 		administratorService.insert(administrator);
 		
-		return "redirect://";
+		return "redirect:/";
 	}
 }
