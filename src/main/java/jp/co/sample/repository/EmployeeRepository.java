@@ -1,6 +1,6 @@
 package jp.co.sample.repository;
 
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class EmployeeRepository {
 		employee.setName(rs.getString("name"));
 		employee.setImage(rs.getString("image"));
 		employee.setGender(rs.getString("gender"));
-		employee.setHireDate(rs.getTimestamp("hire_date"));
+		employee.setHireDate(rs.getDate("hire_date"));
 		employee.setMailAddress(rs.getString("mail_address"));
 		employee.setZipCode(rs.getString("zip_code"));
 		employee.setAddress(rs.getString("address"));
@@ -55,7 +55,7 @@ public class EmployeeRepository {
 	public List<Employee> findAll(){
 	
 		String sql = "SELECT id, name, image, gender, hire_date, mail_address, zip_code, address, telephone, salary, characteristics, dependents_count "
-				+ "FROM employees ORDER BY hire_date";
+				+ "FROM employees ORDER BY hire_date DESC";
 		List<Employee> employeeList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 		
 		if(employeeList.isEmpty()) {
