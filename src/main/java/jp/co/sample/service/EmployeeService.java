@@ -17,6 +17,10 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
+	/**
+	 * 従業員情報を全件取得する。
+	 * @return　全従業員情報
+	 */
 	public List<Employee> showList(){
 		return employeeRepository.findAll();
 	}
