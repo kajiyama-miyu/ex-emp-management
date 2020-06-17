@@ -25,8 +25,8 @@ public class AdministratorService {
 		addAdministratorRepository.insert(administrator);
 	}
 	
-	public List<Administrator> findByMailAddressAndPassword(String mailAdress, String password){
-		return addAdministratorRepository.findByMailAddressAndPassword(mailAdress, password);
+	public Administrator login(String mailAddress, String password) {
+		return addAdministratorRepository.findByMailAddressAndPassword(mailAddress, password);
 	}
 	
 	
