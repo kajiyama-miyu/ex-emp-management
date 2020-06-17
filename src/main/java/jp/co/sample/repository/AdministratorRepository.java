@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -33,31 +34,39 @@ public class AdministratorRepository {
 		};
 		
 		
-		
+		/**
+		 * 
+		 * @param administrator
+		 */
 		public void insert(Administrator administrator) {
 			SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
-			String sql = "INSERT INTO administrators(name, mail_address, password) VALUES (:name, :mail_address, :password)";
+			String sql = "INSERT INTO administrators (name, mail_address, password) VALUES (:name, :mailAddress, :password)";
 			
 			template.update(sql, param);
 		}
 		
-		
-		public List<Administrator> findByMailAddressAndPassword(String mailAdress, String password) {
+		/**
+		 * 
+		 * @param mailAdress
+		 * @param password
+		 * @return リストを返す
+		 */
+		public Administrator findByMailAddressAndPassword(String mailAddress, String password) {
 			String sql;
 			
-			if(!(mailAdress==null && password==null)) {
-			sql= "SELECT mail_address, password FROM administrators";
+			if(!(mailAddress==null && password==null)) {
+			sql= "SELECT id, name, mail_address, password FROM administrators WHERE mail_address=:mailAddress AND password=:password";
 			
 			} else {
 				return null;
 			}
 			
-			List<Administrator> administratorList = template.query(sql, ADMINISTRATOR_ROW_MAPPER);
+			SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", mailAddress).addValue("password", password);
+			
+			Administrator administrator  = template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER);
 		
-			/**
-			 * @return mail_addressとpasswordが入ったリストを返す
-			 */
-			return administratorList;
+		
+			return administrator;
 			
 			
 		}
