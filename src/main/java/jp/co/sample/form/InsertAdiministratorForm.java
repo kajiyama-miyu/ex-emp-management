@@ -1,9 +1,14 @@
 package jp.co.sample.form;
 
+import javax.validation.constraints.NotBlank;
+
 public class InsertAdiministratorForm {
 
+	@NotBlank(message = "氏名を入力してください")
 	private String name;
+	@NotBlank(message = "メールアドレスを入力してください")
 	private String mailAddress;
+	@NotBlank(message = "パスワードを入力してください")
 	private String password;
 	
 	

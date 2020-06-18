@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -52,13 +54,21 @@ public class EmployeeController {
 	 */
 	
 	@RequestMapping("/update")
-	public String update(UpdateEmployeeForm updateEmployeeForm) {
-		Employee employee = new Employee();
-		employee.setId(Integer.parseInt(updateEmployeeForm.getId()));
-		employee.setDependentsCount(Integer.parseInt(updateEmployeeForm.getDependentsCount()));
-		employeeService.update(employee);
+	public String update(@Validated UpdateEmployeeForm updateEmployeeForm,BindingResult result, Model model,String id) {
 		
-		return "redirect:/employee/showList";
+		if(result.hasErrors()) {
+			return showDeail(id, model);
+		}
+		
+		
+			Employee employee = new Employee();
+			employee.setId(Integer.parseInt(updateEmployeeForm.getId()));
+			employee.setDependentsCount(Integer.parseInt(updateEmployeeForm.getDependentsCount()));
+			employeeService.update(employee);
+			
+			return "redirect:/employee/showList";
+
+		
 	}
 	
 	@RequestMapping("/logout")
