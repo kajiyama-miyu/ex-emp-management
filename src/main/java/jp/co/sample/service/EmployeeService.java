@@ -29,7 +29,16 @@ public class EmployeeService {
 	 * @param id
 	 * @return 従業員情報
 	 */
+	
 	public Employee showDetail(Integer id) {
 		return employeeRepository.load(id);
+	}
+	
+	/**
+	 * 従業員情報を更新する。
+	 * @param employee
+	 */
+	public void update(Employee employee) {
+		employeeRepository.update(employee);
 	}
 }
