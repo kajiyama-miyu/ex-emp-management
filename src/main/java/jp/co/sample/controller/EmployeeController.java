@@ -30,6 +30,7 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+	
 
 	@RequestMapping("/showDetail")
 	public String showDeail(String id, Model model) {
@@ -37,5 +38,22 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		
 		return "employee/detail";
+	}
+	
+	/**
+	 *  扶養人数の更新。
+	 * @param updateEmployeeForm
+	 * @return 
+	 */
+	
+	@RequestMapping("/update")
+	public String update(UpdateEmployeeForm updateEmployeeForm) {
+		Employee employee = new Employee();
+		employee.setId(Integer.parseInt(updateEmployeeForm.getId()));
+		employee.setDependentsCount(Integer.parseInt(updateEmployeeForm.getDependentsCount()));
+		employeeService.update(employee);
+		
+		return "redirect:/employee/showList";
+		
 	}
 }
